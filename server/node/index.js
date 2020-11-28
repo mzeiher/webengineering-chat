@@ -19,9 +19,6 @@ async function init() {
 
     // create http server
     const httpServer = createServer(async (req, res) => {
-        res.writeHead(200);
-        res.end('hello');
-        return;
         const url = parseURL(req.url, true);
         const path = url.path === '/' ? '/index.html' : url.path;
 
