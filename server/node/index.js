@@ -6,10 +6,11 @@ import ws from 'ws';
 import { parse as parseURL } from 'url';
 import { contentType } from 'mime-types';
 
-const modulePath = parsePath(import.meta.url);
 
-const MESSAGE_PATH = resolve(modulePath.dir, 'messages.json');
-const STATIC_CONTENT = resolve(modulePath.dir, '../../client');
+const modulePath = parsePath(parseURL(import.meta.url).path).dir;
+
+const MESSAGE_PATH = resolve(modulePath, 'messages.json');
+const STATIC_CONTENT = resolve(modulePath, '../../client');
 
 // top level await not yet support for all nodejs runtimes
 async function init() {
@@ -65,7 +66,7 @@ async function init() {
             socket.destroy();
         }
     });
-    httpServer.listen(8080, '0.0.0.0', () => {
+    httpServer.listen(8081, '0.0.0.0', () => {
         console.log(`Server started...`);
     });
 
