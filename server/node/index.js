@@ -6,8 +6,10 @@ import ws from 'ws';
 import { parse as parseURL } from 'url';
 import { contentType } from 'mime-types';
 
-const MESSAGE_PATH = resolve(process.cwd(), 'messages.json');
-const STATIC_CONTENT = resolve(process.cwd(), '../../client');
+const modulePath = parsePath(import.meta.url);
+
+const MESSAGE_PATH = resolve(modulePath.dir, 'messages.json');
+const STATIC_CONTENT = resolve(modulePath.dir, '../../client');
 
 // top level await not yet support for all nodejs runtimes
 async function init() {
