@@ -3,11 +3,11 @@ import { existsSync } from 'fs';
 import { resolve, parse as parsePath } from 'path';
 import { createServer } from 'http';
 import ws from 'ws';
-import { parse as parseURL } from 'url';
+import { parse as parseURL, fileURLToPath } from 'url';
 import { contentType } from 'mime-types';
 
 
-const modulePath = parsePath(parseURL(import.meta.url).path).dir;
+const modulePath = parsePath(fileURLToPath(import.meta.url).path).dir;
 
 const MESSAGE_PATH = resolve(modulePath, 'messages.json');
 const STATIC_CONTENT = resolve(modulePath, '../../client');
