@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { resolve, parse as parsePath } from 'path';
 import { createServer } from 'http';
-import * as ws from 'ws';
+import ws from 'ws';
 import { parse as parseURL } from 'url';
 import { contentType } from 'mime-types';
 
@@ -15,13 +15,12 @@ async function init() {
     const connectedClients = new Set();
 
     // create websocket server
-    const webSocketServer = new ws.default.Server({ noServer: true });
+    const webSocketServer = new ws.Server({ noServer: true });
 
     // create http server
     const httpServer = createServer(async (req, res) => {
         const url = parseURL(req.url, true);
         const path = url.path === '/' ? '/index.html' : url.path;
-
         if (req.method === 'GET' && path.startsWith('/messages')) {
             res.setHeader('Content-Type', 'application/json');
             res.writeHead(200);
@@ -37,7 +36,6 @@ async function init() {
         }
     });
     httpServer.on('upgrade', (req, socket, header) => {
-        debugger;
         if (req.method === 'GET' && req.url.startsWith('/ws')) {
             webSocketServer.handleUpgrade(req, socket, header, (client) => {
                 console.log('new client connected');
