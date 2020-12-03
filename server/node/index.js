@@ -6,8 +6,7 @@ import ws from 'ws';
 import { parse as parseURL, fileURLToPath } from 'url';
 import { contentType } from 'mime-types';
 
-
-const modulePath = parsePath(fileURLToPath(import.meta.url).path).dir;
+const modulePath = parsePath(fileURLToPath(import.meta.url)).dir;
 
 const MESSAGE_PATH = resolve(modulePath, 'messages.json');
 const STATIC_CONTENT = resolve(modulePath, '../../client');
